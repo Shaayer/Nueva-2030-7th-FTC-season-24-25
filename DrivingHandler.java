@@ -1,29 +1,29 @@
 /*
 FTC To Do:
-1. Get Chasis group to go to I-lab to finish.
+1. Get the Chasis group to go to the I-lab to finish.
 2. Install the Control Hub & figure out where it is
 3. Test and Debug on the actual mat
 Coding To Do:
-1. Complete main function (make the thing actually do stuff)
+1. Complete the main function (make the thing do stuff)
 2. Upload code to robot, test
 3. Debug
 4. ...
 Goals:
-1. Make bot move from Gamepad
-2. Add relatively complex behaviour
-3. Customize to driver's liking
+1. Make the bot move from Gamepad
+2. Add relatively complex behavior
+3. Customize to the driver's liking
 */
 package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
-//moters
+//motors
 import com.qualcomm.robotcore.hardware.DcMotor;
 //map thingy
 import com.qualcomm.robotcore.hardware.HardwareMap;
-//game pad
+//gamepad
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-// driving handler
+// drive handler
 public class DrivingHandler {
     
     // front motors
