@@ -1,40 +1,41 @@
+/*
+FTC To Do:
+1. Get Chasis group to go to I-lab to finish.
+2. Install the Control Hub & figure out where it is
+3. Test and Debug on the actual mat
+Coding To Do:
+1. Complete main function (make the thing actually do stuff)
+2. Upload code to robot, test
+3. Debug
+4. ...
+Goals:
+1. Make bot move from Gamepad
+2. Add relatively complex behaviour
+3. Customize to driver's liking
+*/
 package org.firstinspires.ftc.teamcode;
-
+//why not
+import java.util.*;
+//moters
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.CRServo;
+//map thingy
 import com.qualcomm.robotcore.hardware.HardwareMap;
+//game pad
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 // driving handler
 public class DrivingHandler {
-    // front motors
-    DcMotor motorFrontLeft;
-    DcMotor motorFrontRight;
-
-    // back motors
-    DcMotor motorBackLeft;
-    DcMotor motorBackRight;
-
-    // arm
-    DcMotor motorArm;
     
-    CRServo grabServo;
+    // front motors
+    //DcMotor is a class
+    DcMotor motorLeft;
+    DcMotor motorRight;
 
     // initialization
     public DrivingHandler(HardwareMap hardwareMap) {
         // set front motors
-        motorFrontLeft  = hardwareMap.get(DcMotor.class, "leftFront");
-        motorFrontRight = hardwareMap.get(DcMotor.class, "rightFront");
-
-        // set back motors
-        motorBackLeft  = hardwareMap.get(DcMotor.class, "leftBack");
-        motorBackRight = hardwareMap.get(DcMotor.class, "rightBack");
-
-        // arm
-        motorArm = hardwareMap.get(DcMotor.class, "motorArm");
-        
-        grabServo = hardwareMap.get(CRServo.class, "grabServo");
+        motorLeft  = hardwareMap.get(DcMotor.class, "motorLeft");
+        motorRight = hardwareMap.get(DcMotor.class, "motorRight");
     }
 
     // gameplay loop
@@ -42,44 +43,27 @@ public class DrivingHandler {
         float leftStickX  = gamepad1.left_stick_x;
         float leftStickY  = gamepad1.left_stick_y;
         float rightStickX = gamepad1.right_stick_x;
-        float rightStickY = gamepad1.right_stick_y;
-        float leftTrigger = gamepad1.left_trigger;
-        float rightTrigger = gamepad1.right_trigger;
 
-        float moveX = leftStickX;
-        float moveY = rightTrigger-leftTrigger;
-        float rot = rightStickX;
-        float arm = rightStickY / (float) 1.75;
-        
-        
-        double power = 1;
- 
         // set motor powers
-        double frontLeft = (moveX - moveY + rot)*power;
-        double frontRight = (-moveX - moveY - rot)*power;
-        double backLeft = (-moveX - moveY + rot)*power;
-        double backRight = (moveX - moveY - rot)*power;
+        motorLeft.setPower(Math.min(leftStickX   - leftStickY + rightStickX, 1) * 0.5);
+        motorRight.setPower(Math.min(-leftStickX - leftStickY - rightStickX, 1) * 0.5);
 
-        double max = Math.max(frontLeft, frontRight);
-        max = Math.max(max, backLeft);
-        max = Math.max(max, backRight);
-
-        if (max > 1.0) {
-            frontLeft /= max;
-            frontRight /= max;
-            backLeft /= max;
-            backRight /= max;
+        // dpad control(more precise)
+        if (gamepad1.dpad_up) {
+            motorLeft.setPower(0.25);
+            motorRight.setPower(0.25);
         }
-        
-        motorFrontLeft.setPower(frontLeft);
-        motorFrontRight.setPower(frontRight);
-        motorBackLeft.setPower(backLeft);
-        motorBackRight.setPower(backRight);
-
-        // arm
-        motorArm.setPower(arm);
-        
-        grabServo.setPower(-leftStickY);
-
+        if (gamepad1.dpad_down) {
+            motorLeft.setPower(-0.25);
+            motorRight.setPower(-0.25);
+        }
+        if (gamepad1.dpad_left) {
+            motorLeft.setPower(-0.25);
+            motorRight.setPower(0.25);
+        }
+        if (gamepad1.dpad_right) {
+            motorLeft.setPower(0.25);
+            motorRight.setPower(-0.25);
+        }
     }
 }
