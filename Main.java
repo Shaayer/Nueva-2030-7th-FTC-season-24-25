@@ -1,6 +1,3 @@
-//FILE: Main.java
-
-//MAIN
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -29,7 +26,6 @@ public class Main extends OpMode {
         telemetry.update();
     }
 
-    // gameplay loop
     public void loop() {
         // run handlers
         drivingHandler.loop(gamepad1);
@@ -37,8 +33,6 @@ public class Main extends OpMode {
         clawServoHandler.loop(gamepad1);
         intakeServoHandler.loop(gamepad1);
         elbowHandler.loop(gamepad1);
-        //grabServoHandler.loop(gamepad1);
-        //slideMotorHandler.loop(gamepad1);
 
         telemetry.addData("status", "running");
         telemetry.update();
