@@ -24,3 +24,5 @@ Goals:
 1. Make the bot move from Gamepad
 2. Add relatively complex behavior
 3. Customize to the driver's liking
+
+IMPORTANT: Code is finished, next steps: Upload, Fine tune/Debug
