@@ -1,18 +1,5 @@
-/*
-FTC To Do:
-1. Get the Chasis group to go to the I-lab to finish.
-2. Install the Control Hub & figure out where it is
-3. Test and Debug on the actual mat
-Coding To Do:
-1. Complete the main function (make the thing do stuff)
-2. Upload code to robot, test
-3. Debug
-4. ...
-Goals:
-1. Make the bot move from Gamepad
-2. Add relatively complex behavior
-3. Customize to the driver's liking
-*/
+//FILE: DrivingHandler.java
+
 package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
@@ -20,17 +7,16 @@ import java.util.*;
 import com.qualcomm.robotcore.hardware.DcMotor;
 //map thingy
 import com.qualcomm.robotcore.hardware.HardwareMap;
-//gamepad
+//game pad
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-// drive handler
+// driving handler
 public class DrivingHandler {
-    
+    //class
     // front motors
     //DcMotor is a class
     DcMotor motorLeft;
     DcMotor motorRight;
-
     // initialization
     public DrivingHandler(HardwareMap hardwareMap) {
         // set front motors
@@ -42,11 +28,10 @@ public class DrivingHandler {
     public void loop(Gamepad gamepad1) {
         float leftStickX  = gamepad1.left_stick_x;
         float leftStickY  = gamepad1.left_stick_y;
-        float rightStickX = gamepad1.right_stick_x;
 
         // set motor powers
-        motorLeft.setPower(Math.min(leftStickX   - leftStickY + rightStickX, 1) * 0.5);
-        motorRight.setPower(Math.min(-leftStickX - leftStickY - rightStickX, 1) * 0.5);
+        motorLeft.setPower(Math.min(leftStickX   - leftStickY, 1) * 0.5);
+        motorRight.setPower(Math.min(-leftStickX - leftStickY, 1) * 0.5);
 
         // dpad control(more precise)
         if (gamepad1.dpad_up) {
