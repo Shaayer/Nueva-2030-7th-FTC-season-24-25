@@ -1,5 +1,3 @@
-//FILE: IntakeServoHandler
-//resources
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,7 +6,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeServoHandler {
     // grab servo
-    Servo grabServo;
+    Servo intakeServo;
     int grabbing;
 
     // initialization
@@ -37,10 +35,10 @@ public class IntakeServoHandler {
         }
         
         if(grabbing == 1){
-            grabServo.setPosition(0);
+            intakeServo.setPosition(0);
         }
         if(grabbing == 2){
-            grabServo.setPosition(1);
+            intakeServo.setPosition(1);
         }
     }
 }
