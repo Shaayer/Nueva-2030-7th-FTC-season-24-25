@@ -1,5 +1,3 @@
-//FILE: ElbowHandler
-
 package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
@@ -37,6 +35,6 @@ public class ElbowHandler {
         else{
             direction = 0;
         }
-        motorLeft.setPower(direction/4);
+        motorJoint.setPower(direction/4);
     }
 }
