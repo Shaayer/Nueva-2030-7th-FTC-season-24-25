@@ -1,5 +1,3 @@
-//FILE: DrivingHandler.java
-
 package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
@@ -10,45 +8,25 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 //game pad
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-// driving handler
-public class DrivingHandler {
-    //class
-    // front motors
-    //DcMotor is a class
-    DcMotor motorLeft;
-    DcMotor motorRight;
-    // initialization
-    public DrivingHandler(HardwareMap hardwareMap) {
-        // set front motors
-        motorLeft  = hardwareMap.get(DcMotor.class, "motorLeft");
-        motorRight = hardwareMap.get(DcMotor.class, "motorRight");
-    }
 
+
+// driving handler
+public class TowerServoHandler {
+    DcMotor towerMotor;
+    // initialization
+    public TowerServoHandler(HardwareMap hardwareMap) {
+        towerMotor  = hardwareMap.get(DcMotor.class, "towerMotor");
+    }
+    
     // gameplay loop
     public void loop(Gamepad gamepad1) {
-        float leftStickX  = gamepad1.left_stick_x;
-        float leftStickY  = gamepad1.left_stick_y;
-
-        // set motor powers
-        motorLeft.setPower(Math.min(leftStickX   - leftStickY, 1) * 0.5);
-        motorRight.setPower(Math.min(-leftStickX - leftStickY, 1) * 0.5);
-
-        // dpad control(more precise)
-        if (gamepad1.dpad_up) {
-            motorLeft.setPower(0.25);
-            motorRight.setPower(0.25);
+        boolean bumperLeft = gamepad1.left_bumper;
+        boolean bumperRight = gamepad1.right_bumper;
+        if(bumperLeft && !bumperRight){
+            towerMotor.setPower(1);
         }
-        if (gamepad1.dpad_down) {
-            motorLeft.setPower(-0.25);
-            motorRight.setPower(-0.25);
-        }
-        if (gamepad1.dpad_left) {
-            motorLeft.setPower(-0.25);
-            motorRight.setPower(0.25);
-        }
-        if (gamepad1.dpad_right) {
-            motorLeft.setPower(0.25);
-            motorRight.setPower(-0.25);
+        if(!bumperLeft && bumperRight){
+            towerMotor.setPower(-1);
         }
     }
 }
