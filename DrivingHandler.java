@@ -27,27 +27,18 @@ public class DrivingHandler {
     public void loop(Gamepad gamepad1) {
         float leftStickX  = gamepad1.left_stick_x;
         float leftStickY  = gamepad1.left_stick_y;
-
-        // set motor powers
-        motorLeft.setPower(Math.min(leftStickX   - leftStickY, 1));
-        motorRight.setPower(Math.min(leftStickX + leftStickY, 1));
-
-        // dpad control(more precise)
-        if (gamepad1.dpad_up) {
-            motorLeft.setPower(0.25);
-            motorRight.setPower(-0.25);
-        }
-        if (gamepad1.dpad_down) {
-            motorLeft.setPower(-0.25);
-            motorRight.setPower(0.25);
-        }
-        if (gamepad1.dpad_left) {
-            motorLeft.setPower(-0.25);
-            motorRight.setPower(-0.25);
-        }
-        if (gamepad1.dpad_right) {
-            motorLeft.setPower(0.25);
-            motorRight.setPower(0.25);
-        }
-    }
+int dive = 1;
+float leftTrigger = gamepad1.left_trigger;
+if(leftTrigger>=0.5){
+    dive = 2;
 }
+        // set motor powers
+        motorLeft.setPower(Math.min(leftStickX   - leftStickY, 1)/dive);
+        motorRight.setPower(Math.min(leftStickX + leftStickY, 1)/dive);
+        
+        
+    }
+        
+        
+        
+    }
