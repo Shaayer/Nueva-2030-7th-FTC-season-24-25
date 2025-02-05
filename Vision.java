@@ -2,17 +2,26 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.opencv.core.Size;
+import android.util.Size;
+import java.util.*;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Gamepad;
 
 @TeleOp
 public class Vision extends LinearOpMode {
 
+    DcMotor motorLeft;
+    DcMotor motorRight;
     @Override
     public void runOpMode() throws InterruptedException {
+        motorLeft  = hardwareMap.get(DcMotor.class, "motorLeft");
+        motorRight = hardwareMap.get(DcMotor.class, "motorRight");
 
         AprilTagProcessor tagProcessor = new AprilTagProcessor.Builder()
             .setDrawAxes(true)
@@ -25,7 +34,7 @@ public class Vision extends LinearOpMode {
         VisionPortal visionPortal = new VisionPortal.Builder()
             .addProcessor(tagProcessor)
             .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-            .setCameraResolution(new Size(640, 480))
+            .setCameraResolution(new Size(1280, 960))
             .build();
 
         waitForStart();
@@ -42,8 +51,12 @@ public class Vision extends LinearOpMode {
                 telemetry.addData("pitch", tag.ftcPose.pitch);
                 telemetry.addData("roll", tag.ftcPose.roll);
                 telemetry.addData("yaw", tag.ftcPose.yaw);
+                motorLeft.setPower(tag.ftcPose.yaw / 30);
+                motorRight.setPower(tag.ftcPose.yaw / 30);
             } else {
                 telemetry.addData("Status", "No AprilTags detected");
+                motorLeft.setPower(0);
+                motorRight.setPower(0);
             }
 
             telemetry.update();
