@@ -12,14 +12,14 @@ This repository is for the Nueva 7th Grade (class of 2030) FTC team competing in
 Known competition date(s): 1/11/2024
 
 FTC To Do:
-1. Move the tower back
-2. Install arm
-3. fix all servos
+1. Config webcam
+2. Do wire management
+3. Add 9-axis IMU
 Coding To Do:
-1. Debug servos
-2. Do teachable machine to recognize colored blocks
-3. Add sensors
+1. Complete Presets
+2. Complete both types of Auto
+3. Add sensors to Auto
 Goals:
-1. Make sure the arm works
-2. Add sensors
-3. Customize
+1. Complete Auto
+2. Complete Presets
+3. Add sensors
