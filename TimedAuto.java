@@ -1,4 +1,6 @@
 
+//FILE: Auto (time-based)
+
 package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
@@ -39,6 +41,7 @@ public class TimedAuto {
 
     */
     // initialization
+    @Autonomous
     public TimedAuto(HardwareMap hardwareMap) {
         // set front motors
         motorJoint  = hardwareMap.get(DcMotor.class, "motorJoint");
@@ -50,7 +53,10 @@ public class TimedAuto {
     }
 
     // gameplay loop
-    public void loop() {
+    public void runOpMode() {
+        waitForStart();
+
+while (opModeIsActive() && !isStopRequested()) {
        timer+=0.1;
        if(timer>=duration[step]){
             timer = 0;
@@ -111,5 +117,6 @@ public class TimedAuto {
             }
             towerMotor.setPower(0); // Stop the motor
         }
+    }
     }
 }
