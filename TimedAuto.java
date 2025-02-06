@@ -63,19 +63,19 @@ while (opModeIsActive() && !isStopRequested()) {
             step++;
        }
         if(steps[step]==1){
-            motorLeft.setPower(1);
+            motorLeft.setPower(0.9);
             motorRight.setPower(1);
         }
          if(steps[step]==2){
-            motorLeft.setPower(-1);
+            motorLeft.setPower(-0.9);
             motorRight.setPower(-1);
         }
          if(steps[step]==3){
-            motorLeft.setPower(1);
+            motorLeft.setPower(0.9);
             motorRight.setPower(-1);
         }
         if(steps[step]==4){
-            motorLeft.setPower(-1);
+            motorLeft.setPower(-0.9);
             motorRight.setPower(1);
         }
         if(steps[step]==5){
