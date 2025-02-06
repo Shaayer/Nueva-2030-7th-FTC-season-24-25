@@ -12,7 +12,7 @@ public class IntakeServoHandler {
     // initialization
     public IntakeServoHandler(HardwareMap hardwareMap) {
         // set grab servo
-        intakeServo = hardwareMap.get(Servo.class, "grabServo");
+        intakeServo = hardwareMap.get(Servo.class, "intakeServo");
 
         // set initial state
         grabbing    = 0;
