@@ -28,6 +28,9 @@ public class TimedAuto {
     int step = 0;
            int[] steps = new int[]{5,1,6,7,2,3,1,3,1};
     float[] duration = new float[]{5,3,5,2,2,3,3,3,2};
+    float[] motorPowers= new float[]{0.9,1,1}
+    // float leftMotorPower=0.9
+    
     /*
 1. forward
 2. backward
@@ -63,25 +66,25 @@ while (opModeIsActive() && !isStopRequested()) {
             step++;
        }
         if(steps[step]==1){
-            motorLeft.setPower(0.9);
-            motorRight.setPower(1);
+            motorLeft.setPower(motorPower[0]);
+            motorRight.setPower(motorPower[1]);
         }
          if(steps[step]==2){
-            motorLeft.setPower(-0.9);
-            motorRight.setPower(-1);
+            motorLeft.setPower(-motorPower[0]);
+            motorRight.setPower(-motorPower[1]);
         }
          if(steps[step]==3){
-            motorLeft.setPower(0.9);
-            motorRight.setPower(-1);
+            motorLeft.setPower(motorPower[0]);
+            motorRight.setPower(-motorPower[1]);
         }
         if(steps[step]==4){
-            motorLeft.setPower(-0.9);
-            motorRight.setPower(1);
+            motorLeft.setPower(-motorPower[0]);
+            motorRight.setPower(motorPower[1]);
         }
         if(steps[step]==5){
             towerMotor.setTargetPosition(1600); // Move to position 1000 (encoder ticks)
             towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
-            towerMotor.setPower(1); // Set speed
+            towerMotor.setPower(motorPower[2]); // Set speed
 
             // Wait until it reaches the target
             while (towerMotor.isBusy()) {
@@ -92,7 +95,7 @@ while (opModeIsActive() && !isStopRequested()) {
         if(steps[step]==6){
             towerMotor.setTargetPosition(1450); // Move to position 1000 (encoder ticks)
             towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
-            towerMotor.setPower(1); // Set speed
+            towerMotor.setPower(motorPower[2]); // Set speed
 
             // Wait until it reaches the target
             while (towerMotor.isBusy()) {
