@@ -28,7 +28,7 @@ public class TimedAuto {
     int step = 0;
            int[] steps = new int[]{5,1,6,7,2,3,1,3,1};
     float[] duration = new float[]{5,3,5,2,2,3,3,3,2};
-    float[] motorPowers= new float[]{0.9,1,1}
+    float[] motorPowers= new float[]{0.9,1,1};
     // float leftMotorPower=0.9
     
     /*
