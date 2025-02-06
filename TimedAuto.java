@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.Servo;
 
 // driving handler
+@Autonomous
 public class TimedAuto {
     //class
     // front motors
@@ -22,13 +23,13 @@ public class TimedAuto {
     DcMotor towerMotor;
     DcMotor motorLeft;
     DcMotor motorRight;
-    DcMotor grabServo;
-    DcMotor intakeServo;
+    Servo grabServo;
+    Servo intakeServo;
     float timer = 0;
     int step = 0;
-           int[] steps = new int[]{5,1,6,7,2,3,1,3,1};
+    int[] steps = new int[]{5,1,6,7,2,3,1,3,1};
     float[] duration = new float[]{5,3,5,2,2,3,3,3,2};
-    float[] motorPowers= new float[]{0.9,1,1};
+    float[] motorPower= new float[]{0.9,1,1};
     // float leftMotorPower=0.9
     
     /*
@@ -44,7 +45,6 @@ public class TimedAuto {
 
     */
     // initialization
-    @Autonomous
     public TimedAuto(HardwareMap hardwareMap) {
         // set front motors
         motorJoint  = hardwareMap.get(DcMotor.class, "motorJoint");
@@ -53,6 +53,7 @@ public class TimedAuto {
         motorRight = hardwareMap.get(DcMotor.class, "motorRight");
         grabServo = hardwareMap.get(Servo.class, "grabServo");
         intakeServo = hardwareMap.get(Servo.class, "intakeServo");
+        towerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
     // gameplay loop
@@ -65,6 +66,7 @@ while (opModeIsActive() && !isStopRequested()) {
             timer = 0;
             step++;
        }
+    if(step<steps.length){
         if(steps[step]==1){
             motorLeft.setPower(motorPower[0]);
             motorRight.setPower(motorPower[1]);
@@ -109,7 +111,7 @@ while (opModeIsActive() && !isStopRequested()) {
         if(steps[step]==8){
             grabServo.setPosition(0.45);
         }
-        f(steps[step]==9){
+        if(steps[step]==9){
             towerMotor.setTargetPosition(0); // Move to position 1000 (encoder ticks)
             towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
             towerMotor.setPower(1); // Set speed
@@ -121,5 +123,6 @@ while (opModeIsActive() && !isStopRequested()) {
             towerMotor.setPower(0); // Stop the motor
         }
     }
+}
     }
 }
