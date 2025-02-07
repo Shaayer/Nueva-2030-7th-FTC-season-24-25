@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
@@ -14,7 +15,7 @@ public class ElbowHandler {
     // front motors
     //DcMotor is a class
     DcMotor motorJoint;
-    int direction = 0;
+    double direction = 0;
     // initialization
     public ElbowHandler(HardwareMap hardwareMap) {
         // set front motors
@@ -23,18 +24,17 @@ public class ElbowHandler {
 
     // gameplay loop
     public void loop(Gamepad gamepad1) {
-        boolean buttonX = gamepad1.x;
-        boolean buttonY = gamepad1.y;
-        // set motor powers
-        if(buttonX && !buttonY){
-            direction = 1;
-        }
-        else if(!buttonX && buttonY){
-            direction = -1;
-        }
-        else{
+        direction = 0;
+        if(gamepad1.dpad_up){
+            direction = -0.8;
+        }else if(gamepad1.dpad_down){
+            direction = 0.8;
+        }else{
             direction = 0;
+            motorJoint.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
-        motorJoint.setPower(direction/4);
+        
+        motorJoint.setPower(direction);
     }
+    
 }
