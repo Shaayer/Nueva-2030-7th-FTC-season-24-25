@@ -1,128 +1,95 @@
-
-//FILE: Auto (time-based)
-
 package org.firstinspires.ftc.teamcode;
-//why not
-import java.util.*;
-//motors
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-//map thingy
-import com.qualcomm.robotcore.hardware.HardwareMap;
-//game pad
-import com.qualcomm.robotcore.hardware.Gamepad;
-//servo
 import com.qualcomm.robotcore.hardware.Servo;
 
-// driving handler
-@Autonomous
-public class TimedAuto {
-    //class
-    // front motors
-    //DcMotor is a class
-    DcMotor motorJoint;
-    DcMotor towerMotor;
-    DcMotor motorLeft;
-    DcMotor motorRight;
-    Servo grabServo;
-    Servo intakeServo;
-    float timer = 0;
-    int step = 0;
-    int[] steps = new int[]{5,1,6,7,2,3,1,3,1};
-    float[] duration = new float[]{5,3,5,2,2,3,3,3,2};
-    float[] motorPower= new float[]{0.9,1,1};
-    // float leftMotorPower=0.9
-    
-    /*
-1. forward
-2. backward
-3. turn towards right
-4. turn towards left
-5. tower up(to a point)
-6. tower down a bit
-7. open claw
-8. close claw
-9. lower down tower(closer to 0)
+@Autonomous(name="TimedAuto")
+public class TimedAuto extends LinearOpMode {
+    // Motors and Servos
+    private DcMotor motorJoint, towerMotor, motorLeft, motorRight;
+    private Servo grabServo, intakeServo;
 
-    */
-    // initialization
-    public TimedAuto(HardwareMap hardwareMap) {
-        // set front motors
-        motorJoint  = hardwareMap.get(DcMotor.class, "motorJoint");
-        towerMotor  = hardwareMap.get(DcMotor.class, "towerMotor");
-        motorLeft  = hardwareMap.get(DcMotor.class, "motorLeft");
+    // Timed step execution
+    double timer = 0;
+    int step = 0;
+
+    int[] steps = {1};
+    float[] duration = {10};
+    float[] motorPowers = {0.9f, -1.0f, 1.0f}; // Corrected float values
+
+    @Override
+    public void runOpMode() {
+        // Hardware mapping
+        motorJoint = hardwareMap.get(DcMotor.class, "motorJoint");
+        towerMotor = hardwareMap.get(DcMotor.class, "towerMotor");
+        motorLeft = hardwareMap.get(DcMotor.class, "motorLeft");
         motorRight = hardwareMap.get(DcMotor.class, "motorRight");
         grabServo = hardwareMap.get(Servo.class, "grabServo");
         intakeServo = hardwareMap.get(Servo.class, "intakeServo");
+
+        // Reset encoder for tower motor
         towerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        towerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        waitForStart(); // Now recognized because of LinearOpMode
+timer+=0.1;
+   
+    if (step < duration.length){ // Prevent out-of-bounds access
+    if (timer>=10) {
+        // Reset timer
+        step++; // Move to the next ste
+        // Check again to prevent crash
+     
+        // Stop all motors when switching steps
+        motorLeft.setPower(0);
+        motorRight.setPower(0);
+        towerMotor.setPower(0);
+        ///break;
     }
 
-    // gameplay loop
-    public void runOpMode() {
-        waitForStart();
-
-while (opModeIsActive() && !isStopRequested()) {
-       timer+=0.1;
-       if(timer>=duration[step]){
-            timer = 0;
-            step++;
-       }
-    if(step<steps.length){
-        if(steps[step]==1){
-            motorLeft.setPower(motorPower[0]);
-            motorRight.setPower(motorPower[1]);
-        }
-         if(steps[step]==2){
-            motorLeft.setPower(-motorPower[0]);
-            motorRight.setPower(-motorPower[1]);
-        }
-         if(steps[step]==3){
-            motorLeft.setPower(motorPower[0]);
-            motorRight.setPower(-motorPower[1]);
-        }
-        if(steps[step]==4){
-            motorLeft.setPower(-motorPower[0]);
-            motorRight.setPower(motorPower[1]);
-        }
-        if(steps[step]==5){
-            towerMotor.setTargetPosition(1600); // Move to position 1000 (encoder ticks)
-            towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
-            towerMotor.setPower(motorPower[2]); // Set speed
-
-            // Wait until it reaches the target
-            while (towerMotor.isBusy()) {
-                // Keep checking if motor reached the position
-            }
-            towerMotor.setPower(0); // Stop the motor
-        }
-        if(steps[step]==6){
-            towerMotor.setTargetPosition(1450); // Move to position 1000 (encoder ticks)
-            towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
-            towerMotor.setPower(motorPower[2]); // Set speed
-
-            // Wait until it reaches the target
-            while (towerMotor.isBusy()) {
-                // Keep checking if motor reached the position
-            }
-            towerMotor.setPower(0); // Stop the motor
-        }
-        if(steps[step]==7){
+    switch (steps[step]) {
+        case 1: // Move forward
+            motorLeft.setPower(motorPowers[0]);
+            motorRight.setPower(motorPowers[1]);
+           // break;
+        case 2: // Move backward
+            motorLeft.setPower(-motorPowers[0]);
+            motorRight.setPower(-motorPowers[1]);
+           // break;
+        case 3: // Turn right
+            motorLeft.setPower(motorPowers[0]);
+            motorRight.setPower(-motorPowers[1]);
+            //break;
+        case 4: // Turn left
+            motorLeft.setPower(-motorPowers[0]);
+            motorRight.setPower(motorPowers[1]);
+            //break;
+        case 5: // Move tower up
+            moveTowerToPosition(1600, motorPowers[2]);
+           // break;
+        case 6: // Move tower down slightly
+            moveTowerToPosition(1450, motorPowers[2]);
+            //break;
+        case 7: // Open claw
             grabServo.setPosition(0.2);
-        }
-        if(steps[step]==8){
+            //break;
+        case 8: // Close claw
             grabServo.setPosition(0.45);
-        }
-        if(steps[step]==9){
-            towerMotor.setTargetPosition(0); // Move to position 1000 (encoder ticks)
-            towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
-            towerMotor.setPower(1); // Set speed
-
-            // Wait until it reaches the target
-            while (towerMotor.isBusy()) {
-                // Keep checking if motor reached the position
-            }
-            towerMotor.setPower(0); // Stop the motor
-        }
+            //break;
+        case 9: // Lower tower to 0
+            moveTowerToPosition(0, 1.0f);
+            //break;
     }
+
 }
+    }
+
+    // Move tower motor to a set position
+    private void moveTowerToPosition(int position, double power) {
+        towerMotor.setTargetPosition(position);
+        towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        towerMotor.setPower(power);
     }
 }
