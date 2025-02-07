@@ -15,9 +15,9 @@ public class TimedAuto extends LinearOpMode {
     double timer = 0;
     int step = 0;
 
-    int[] steps = {1};
-    float[] duration = {10};
-    float[] motorPowers = {0.9f, -1.0f, 1.0f}; // Corrected float values
+    private final int[] steps = {5,1,6,7,2,3,1,3,1};
+    private final float[] duration = {5.0f, 3.0f, 5.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 2.0f};
+    private final float[] motorPowers = {0.9f, 1.0f, 1.0f}; // Corrected float values
 
     @Override
     public void runOpMode() {
@@ -34,10 +34,10 @@ public class TimedAuto extends LinearOpMode {
         towerMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart(); // Now recognized because of LinearOpMode
-timer+=0.1;
+timer+=1.60;
    
     if (step < duration.length){ // Prevent out-of-bounds access
-    if (timer>=10) {
+    if (timer>=duration[step]) {
         // Reset timer
         step++; // Move to the next ste
         // Check again to prevent crash
