@@ -1,4 +1,4 @@
-
+package org.firstinspires.ftc.teamcode;
 //why not
 import java.util.*;
 //motors
@@ -22,6 +22,7 @@ public class TowerServoHandler {
         boolean bumperRight = gamepad1.right_bumper;
         double dive = 1;
         float leftTrigger = gamepad1.right_trigger;
+        towerMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         if(bumperLeft){
             towerMotor.setPower(dive);
         }
@@ -34,10 +35,21 @@ public class TowerServoHandler {
         }
         if(leftTrigger>=0.5){
             // Initialize motor
-            towerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset position
-            towerMotor.setTargetPosition(1000); // Move to position 1000 (encoder ticks)
+            //towerMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Reset position
+            towerMotor.setTargetPosition(946); // Move to position 1000 (encoder ticks)
             towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
-            towerMotor.setPower(0.5); // Set speed
+            towerMotor.setPower(1); // Set speed
+
+            // Wait until it reaches the target
+            while (towerMotor.isBusy()) {
+                // Keep checking if motor reached the position
+            }
+            towerMotor.setPower(0); // Stop the motor
+        }
+        if(gamepad1.b){
+            towerMotor.setTargetPosition(0); // Move to position 1000 (encoder ticks)
+            towerMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION); // Auto moves to target
+            towerMotor.setPower(1); // Set speed
 
             // Wait until it reaches the target
             while (towerMotor.isBusy()) {
