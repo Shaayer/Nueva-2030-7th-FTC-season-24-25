@@ -21,7 +21,7 @@ public class TimedAuto extends LinearOpMode {
     // Step execution sequence
     private final int[] steps = {5,1,6,7,2,3,1,3,1};
     private final float[] duration = {5.0f, 3.0f, 5.0f, 2.0f, 2.0f, 3.0f, 3.0f, 3.0f, 2.0f};
-    private final float[] motorPowers = {0.9f, 1.0f, 1.0f}; // Left, Right, Tower
+    private final float[] motorPowers = {0.9f, -1.0f, 1.0f}; // Left, Right, Tower
 
     @Override
     public void runOpMode() {
