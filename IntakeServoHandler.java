@@ -1,3 +1,5 @@
+//FILE: IntakeServoHandler
+//resources
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -19,9 +21,9 @@ public class IntakeServoHandler {
     }
     public void loop(Gamepad gamepad1) {
         //intake
-        boolean buttonA = gamepad1.a;
+        boolean buttonA = gamepad1.y;
         //Outake
-        boolean buttonB = gamepad1.b;
+        boolean buttonB = gamepad1.a;
         //running servo
         if(buttonA && !buttonB){
             grabbing = 1;
@@ -35,10 +37,10 @@ public class IntakeServoHandler {
         }
         
         if(grabbing == 1){
-            intakeServo.setPosition(0);
+           intakeServo.setPosition(0);
         }
         if(grabbing == 2){
-            intakeServo.setPosition(1);
+           intakeServo.setPosition(1);
         }
     }
 }
